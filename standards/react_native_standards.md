@@ -93,7 +93,7 @@ This style guide provides a comprehensive overview of best practices, coding sta
 - Test-Only Imports
 
   ```csharp
-  import { testFunction} from './tests';
+  import { testFunction } from './tests';
   ```
 
 ### Sorting
