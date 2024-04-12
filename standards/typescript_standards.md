@@ -10,10 +10,10 @@ let data: any;
 let data: string;
 ```
 
-## Leverage Interface for Object Shapes
-Interfaces in TypeScript are powerful tools for defining the shapes of objects. Use interfaces to ensure objects have the expected structure. In the example below, an interface is used to standardize the users to ensure that constants provide the expected structure.
+## Leverage Types for Object Shapes
+Types in TypeScript are powerful tools for defining the shapes of objects. Use Types to ensure objects have the expected structure. In the example below, a Type is used to standardize the users to ensure that constants provide the expected structure.
 ```
-interface User {
+Type User = {
   fullName: string;
   age: number;
 }
@@ -26,7 +26,7 @@ const user: User = {
 
 Some properties can only be modified when an object is first created. You can specify this by putting `readonly` before the name of the property, as the following example shows.
 ```
-interface Employee {
+Type Employee = {
   readonly idNumber: number;
   readonly age: number;
 }
@@ -43,12 +43,12 @@ type StringOrNumber = string | number;
 
 
 // Intersection type
-interface BusinessPartner {
+Type BusinessPartner {
   name: string;
   credit: number;
 }
 
-interface Identity {
+Type Identity {
   id: number;
 }
 
@@ -62,7 +62,7 @@ Utility types in TypeScript are predefined type functions that perform transform
 `Partial` makes all properties of an input type `Type` as optional. This utility returns a type that represents all subsets of a given type. Below is an example of Partial.
 
 ```
-interface User {
+Type User = {
   name: string;
   age: number;
   gender: string;
@@ -75,7 +75,7 @@ let user: Partial<User> = {};
 ### Required Type
 `Required` does the opposite of `Partial`. It makes all members of an input type `Type` non-optional (in other words, required). The following is an example of `Required`.
 ```
-interface User {
+Type User = {
   name: string;
   age: number;
   gender: string;
@@ -119,7 +119,7 @@ const fullName = user.fullName;
 const age = user.age;
 
 // We destructure
-const { fullName, age } = object;
+const { fullName, age } = user;
 ```
 
 ## Standard Naming Conventions
