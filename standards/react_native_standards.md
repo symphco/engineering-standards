@@ -19,41 +19,36 @@ This style guide provides a comprehensive overview of best practices, coding sta
 ## Naming Conventions
 
 - Component’s names should be written using `pascal case`.
->`Header.js` <br>
->`CustomButton.js` <br>
->`Footer.js`
+  >`Header.js` <br>
+  >`CustomButton.js` <br>
+  >`Footer.js`
 
 - Non-component’s name should be written using `camel case`.
-> myUtilityFile.js
-> cookieHelper.js
-> fetchApi.js
+  > `myUtilityFile.js` <br>
+  > `cookieHelper.js` <br>
+  > `fetchApi.js`
 
 - Unit test files should use the same name as its corresponding file.
-```csharp
-`HeroBanner.js`
-`HeroBanner.test.js`
+  > `HeroBanner.js` <br>
+  > `HeroBanner.test.js` <br>
   
-`CookieBanner.js`
-`CookieBanner.test.js`
-```
+  > `CookieBanner.js` <br>
+  > `CookieBanner.test.js`
+
 - Global StyleSheet file should be written using `camel case`.
-```csharp
-`globalStyle.js`
-```
+  > `globalStyle.js` <br>
+
 - All fonts, colors, and font sizes should be in one file.
-```csharp
-`fontsConfig.js`
-```
+  > `fontsConfig.js`
+
 - Attribute name should be `camel case`.
-```csharp
-`className`
-`onClick`
-```
+  > `className` <br>
+  > `onClick`
+
 - Variable names should be `camel case`. Variable names can contain number and special characters.
-```csharp
-`const variable = 'test';`
-`let variableBoolean = true;`
-```
+  > `const variable = 'test';` <br>
+  > `let variableBoolean = true;`
+
 - Use.jsxor.tsxextension a for React components
 
 ## Files and Folders Structure
