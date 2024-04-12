@@ -49,7 +49,7 @@ This style guide provides a comprehensive overview of best practices, coding sta
   > `const variable = 'test';` <br>
   > `let variableBoolean = true;`
 
-- Use.jsxor.tsxextension a for React components
+- Use `.jsx` or `.tsx` extension a for React components
 
 ## Files and Folders Structure
 
@@ -64,37 +64,37 @@ This style guide provides a comprehensive overview of best practices, coding sta
 ###  Import Grouping
 - Standard Libraries (React, React-Native)
 
-```csharp
-import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-```
+  ```csharp
+  import React from 'react';
+  import { TouchableOpacity, View } from 'react-native';
+  ```
 
 - Third-Party Libraries
 
-```csharp
-import axios from 'axios';
-import lodash from 'lodash';
-```
+  ```csharp
+  import axios from 'axios';
+  import lodash from 'lodash';
+  ```
 
 - Your Own Code Imports
 
-```csharp
-import { Button, Card } from '../components';
-import { MainLayout } from '../layouts';
-```
+  ```csharp
+  import { Button, Card } from '../components';
+  import { MainLayout } from '../layouts';
+  ```
 
 - Module-Specific Imports (styles, PNG, etc.)
 
-```csharp
-import styles from'./myComponent.styles';
-import image from './image.png';
-```
+  ```csharp
+  import styles from'./myComponent.styles';
+  import image from './image.png';
+  ```
 
 - Test-Only Imports
 
-```csharp
-import { testFunction} from './tests';
-```
+  ```csharp
+  import { testFunction} from './tests';
+  ```
 
 ### Sorting
 
