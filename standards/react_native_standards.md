@@ -18,13 +18,30 @@ This style guide provides a comprehensive overview of best practices, coding sta
 
 ## Naming Conventions
 
-- Component’s names should be written using `pascal case`. (e.g. `Header.js`, `CustomButton.js`, `Footer.js`)
-- Non-component’s name should be written using `camel case`. (e.g. `myUtilityFile.js`, `cookieHelper.js`, `fetchApi.js`)
-- Unit test files should use the same name as its corresponding file (e.g. `HeroBanner.js`-`HeroBanner.test.js`, `CookieBanner.js`-`CookieBanner.test.js`)
-- Global StyleSheet file should be written using `camel case`. (e.g. `globalStyle.js`)
-- All fonts, colors, and font sizes should be in one file. (e.g. `fontsConfig.js`)
-- Attribute name should be `camel case`. (e.g. `className`, `onClick`)
-- Variable names should be `camel case`. Variable names can contain number and special characters. (e.g. `const variable = 'test';`, `let variableBoolean = true;`) 
+- Component’s names should be written using `pascal case`.
+  `Header.js`
+  `CustomButton.js`
+  `Footer.js`
+- Non-component’s name should be written using `camel case`.
+  `myUtilityFile.js`
+  `cookieHelper.js`
+  `fetchApi.js`
+- Unit test files should use the same name as its corresponding file.
+  `HeroBanner.js`
+  `HeroBanner.test.js`
+  
+  `CookieBanner.js`
+  `CookieBanner.test.js`
+- Global StyleSheet file should be written using `camel case`.
+  `globalStyle.js`
+- All fonts, colors, and font sizes should be in one file.
+  `fontsConfig.js`
+- Attribute name should be `camel case`.
+  `className`
+  `onClick`
+- Variable names should be `camel case`. Variable names can contain number and special characters.
+  `const variable = 'test';`
+  `let variableBoolean = true;`
 - Use.jsxor.tsxextension a for React components
 
 ## Files and Folders Structure
