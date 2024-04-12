@@ -19,17 +19,15 @@ This style guide provides a comprehensive overview of best practices, coding sta
 ## Naming Conventions
 
 - Component’s names should be written using `pascal case`.
-```csharp
-`Header.js`
-`CustomButton.js`
-`Footer.js`
-```
+>`Header.js` <br>
+>`CustomButton.js` <br>
+>`Footer.js`
+
 - Non-component’s name should be written using `camel case`.
-```csharp
-`myUtilityFile.js`
-`cookieHelper.js`
-`fetchApi.js`
-```
+> myUtilityFile.js
+> cookieHelper.js
+> fetchApi.js
+
 - Unit test files should use the same name as its corresponding file.
 ```csharp
 `HeroBanner.js`
