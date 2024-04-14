@@ -13,7 +13,7 @@ let data: string;
 ## Leverage Types for Object Shapes
 Types in TypeScript are powerful tools for defining the shapes of objects. Use Types to ensure objects have the expected structure. In the example below, a Type is used to standardize the users to ensure that constants provide the expected structure.
 ```
-Type User = {
+type User = {
   fullName: string;
   age: number;
 }
@@ -26,7 +26,7 @@ const user: User = {
 
 Some properties can only be modified when an object is first created. You can specify this by putting `readonly` before the name of the property, as the following example shows.
 ```
-Type Employee = {
+type Employee = {
   readonly idNumber: number;
   readonly age: number;
 }
@@ -43,12 +43,12 @@ type StringOrNumber = string | number;
 
 
 // Intersection type
-Type BusinessPartner {
+type BusinessPartner {
   name: string;
   credit: number;
 }
 
-Type Identity {
+type Identity {
   id: number;
 }
 
@@ -62,7 +62,7 @@ Utility types in TypeScript are predefined type functions that perform transform
 `Partial` makes all properties of an input type `Type` as optional. This utility returns a type that represents all subsets of a given type. Below is an example of Partial.
 
 ```
-Type User = {
+type User = {
   name: string;
   age: number;
   gender: string;
@@ -75,7 +75,7 @@ let user: Partial<User> = {};
 ### Required Type
 `Required` does the opposite of `Partial`. It makes all members of an input type `Type` non-optional (in other words, required). The following is an example of `Required`.
 ```
-Type User = {
+type User = {
   name: string;
   age: number;
   gender: string;
@@ -102,6 +102,8 @@ function insertAtBeginning<T>(array: T[], value: T) {
 [TSlint](https://www.npmjs.com/package/tslint)/[ESLint](https://www.npmjs.com/package/eslint) statically analyzes your code to quickly find issues. You can use ESLint to create a series of assertions (called lint rules) that define how your code should look or behave. ESLint also has auto-fixer suggestions to help you improve your code. Finally, you can use ESLint to load in lint rules from shared plugins.
 
 [Prettier](https://www.npmjs.com/package/prettier) is an opinionated code formatter that supports many languages and integrates with most editors. Its primary goal is to eliminate discussions about code formatting by enforcing a consistent style. By doing so, it helps improve code readability and reduces the time developers spend formatting their code manually.
+
+Make sure to set your **tsconfig** to `strict: true` which enables a suite of strict type-checking options that can help you write more robust and error-resistant code. When this setting is enabled, TypeScript enforces stricter type-checking rules, which help catch potential bugs during development, before the code is run or deployed.
 
 ## Organize Imports
 Keep your imports organized and avoid circular dependencies. Consider using tools or IDE features that automatically organize and clean up unused imports. We recommend to activate `sort-imports` rule in your `eslint` to remind you of this while developing
