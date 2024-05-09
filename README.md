@@ -25,6 +25,7 @@ The following standards are essential for maintaining the high quality of softwa
     - [**React Native Standards**](/standards/react_native_standards.md): Best practices for developing cross-platform mobile applications using React Native.
 - [**Security Standards**](/standards/security_standards.md): Protocols and practices to safeguard our software from vulnerabilities and attacks.
 - [**Version Control Standards**](/standards/version_control_standards.md): Guidelines for using version control systems effectively to track and manage changes to the codebase.
+- [**Cloud Architecture Defaults**](/standards/cloud_defaults.md): Outlines the recommended configurations and practices for cloud-based services to ensure optimal security, scalability, and efficiency in line with industry best practices.
 - [**README Standards**](/standards/readme_standards.md): Best practices for creating informative and concise README files to accompany and document software projects.
 
 ## License
