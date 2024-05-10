@@ -2,6 +2,8 @@
 
 The following standards outline the recommended configurations and practices for cloud-based services to ensure optimal security, scalability, and efficiency in line with industry best practices.
 
+![Architecture](./architecture/assets/architecture.png)
+
 ## Table of Contents
 
 The following topics are covered in this document:

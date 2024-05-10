@@ -13,9 +13,9 @@ Common parts of an access management:
 ## How to grant access to users and service accounts
 - Goto the IAM & Admin page in the Google Cloud Console of the specific project.
 - Click the grant access button to add new principal.
-    ![Grant Access](./assets/iam_grant_button.png)
+    ![Grant Access](./assets/iam_01.gif)
 - Add your principal's email address and assign a role.
-    ![Add Principal](./assets/iam_grant_modal.png)
+    ![Add Principal](./assets/iam_02.gif)
 - Click save. This would be the sample output.
     ![Sample Output](./assets/iam_role.png)
 
