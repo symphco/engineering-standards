@@ -428,13 +428,3 @@ Application must satisfies the following high level requirements:
 4.16. Stakeholders - Stakeholders include the application owner, application users, and other entities that rely on the application.
 
 4.17. Phone home - phoning home is a term often used to refer to the behavior of security systems that report network location, username, or other such data to another computer.
-
-5\. **DOCUMENT HISTORY**
-
-| **Editor** | **Details of Change** | **Effectivity Date** |
-| --- | --- | --- |
-|     |     |     |
-| --- | --- | --- |
-|     |     |     |
-| --- | --- | --- |
-```

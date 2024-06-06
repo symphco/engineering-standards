@@ -147,12 +147,3 @@ Insufficient logging and monitoring, coupled with missing or ineffective integra
 10.5 Alerting Mechanisms: Develop and configure custom dashboards and alerts that enable the IT security team to detect, investigate, and respond to incidents more rapidly.
 
 This section is designed to enhance the detection and response capabilities of API systems, reducing the time attackers have to exploit vulnerabilities unnoticed.
-
-**DOCUMENT HISTORY**
-
-|**Editor**|**Details of Change**|**Effectivity Date**|
-|---|---|---|
-||||
-|---|---|---|
-||||
-|---|---|---|
