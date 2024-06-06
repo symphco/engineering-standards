@@ -151,7 +151,7 @@ offered to the user in the first place.
 
 3.5.2.2. The application must sanitize user input before passing to mail systems to protect against SMTP or IMAP injection.
 
-3.5.2.3. OWASP recommends DOMPurify for HTML Sanitization.
+3.5.2.3. OWASP recommends [DOMPurify]([https://github.com/cure53/DOMPurify](https://github.com/cure53/DOMPurify)) for HTML Sanitization.
 
 3.5.2.4. Avoids the use of eval() or other dynamic code execution features. Where there is no alternative, any user input being included must be sanitized or sandboxed before being executed.
 
