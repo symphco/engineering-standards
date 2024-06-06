@@ -28,7 +28,7 @@ Authentication mechanisms are often implemented incorrectly, allowing attackers 
 
 2.2 Endpoint Security: Treat all authentication endpoints, including credential recovery and password reset, with high-security measures such as rate limiting, captcha, and account lockout mechanisms.
 
-2.3 Strong Authentication Practices: Utilize industry-standard methods for authentication, token generation, and password storage. Avoid reinventing these mechanisms.
+2.3 Strong Authentication Practices: Utilize industry-standard methods for authentication, token generation, and password storage. OAuth 2.0 and Multi-Factor Authentication (MFA) for authentication, JSON Web Tokens (JWT) and OAuth 2.0 Access Tokens for token generation, PBKDF2 (Password-Based Key Derivation Function 2) and bcrypt for password storage Avoid reinventing these mechanisms.
 
 2.4 Multi-Factor Authentication (MFA): Implement multi-factor authentication wherever possible to enhance security.
 
