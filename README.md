@@ -23,8 +23,8 @@ The following standards are essential for maintaining the high quality of softwa
     - [**Next.js Standards**](/standards/nextjs_standards.md): Guidelines for building server-rendered or statically generated web applications using Next.js.
     - [**NestJS Standards**](/standards/nestjs_standards.md): Standards for developing efficient, reliable, and scalable server-side applications with NestJS.
     - [**React Native Standards**](/standards/react_native_standards.md): Best practices for developing cross-platform mobile applications using React Native.
-- [**Security Standards**](security_standards.md): Protocols and practices to safeguard our software from vulnerabilities and attacks.
-- [**API Security Standards**](api_security_standards.md): Protocols and practices to safeguard our API from vulnerabilities and attacks.
+- [**Security Standards**](/standards/security_standards.md): Protocols and practices to safeguard our software from vulnerabilities and attacks.
+- [**API Security Standards**](/standards/api_security_standards.md): Protocols and practices to safeguard our API from vulnerabilities and attacks.
 - [**Version Control Standards**](/standards/version_control_standards.md): Guidelines for using version control systems effectively to track and manage changes to the codebase.
 - [**Cloud Architecture Defaults**](/standards/cloud_defaults.md): Outlines the recommended configurations and practices for cloud-based services to ensure optimal security, scalability, and efficiency in line with industry best practices.
 - [**README Standards**](/standards/readme_standards.md): Best practices for creating informative and concise README files to accompany and document software projects.
