@@ -69,9 +69,21 @@ PRIMARY KEY(id)
 );
 ```
 
+To show how to use the `@Entity` decorator to specify the table name in the database. The class name follows the PascalCase naming convention and is in singular form, while the table name in the `@Entity` decorator is in plural form and snake_case, as per our standards.
 
 
+In code, this would look like:
 
+```
+@Entity('users')
+class User {
+// ...
+}
+```
 
-
-
+```
+@Entity('user_roles')
+class UserRole {
+// ...
+}
+```
