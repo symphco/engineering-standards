@@ -46,7 +46,7 @@ class User {
 
 - **Database Tables** should be named in plural form and in snake_case (lowercase with underscores separating words). For example, a table for users would be 'users', and a table for user roles would be 'user_roles'.
 
-- **Database Columns** should be named in snake_case, which is all lowercase with underscores between words. For example, if you have a column for user email, it should be named 'user_email'. 
+- **Database Columns** should be named in snake_case, which is all lowercase with underscores between words. For example, if you have a column for user's email address, it should be named 'email_address'. 
 
 
 In SQL, this would look like:
