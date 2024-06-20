@@ -9,7 +9,7 @@ This document outlines the naming conventions used in our API routes, entities, 
 - **API Controllers** should be named in PascalCase with the word 'Controller' at the end. For example, if you have a controller for users, it should be named 'UsersController'. If the controller is for user roles, it should be named 'UserRolesController'.
 
 
-- **API Functions** should be named in camelCase. For example, if you have a function that gets user data, it should be named 'getUserData'. If the function is for updating user roles, it should be named 'updateUserRoles'.
+- **API Functions** should be prefixed with verb and named in camelCase. For example, if you have a function that gets user data, it should be named 'getUserData'. If the function is for updating user roles, it should be named 'updateUserRoles'.
 
 
 In code, this would look like:
