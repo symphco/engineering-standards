@@ -187,29 +187,21 @@ This style guide provides a comprehensive overview of best practices, coding sta
   import { testFunction } from './tests';
   ```
 
-  To ensure that imports from test files are only used in test files, use the `eslint-plugin-import` and configure it in the ESLint setup. Add the following configuration to your ESLint configuration file (e.g., `.eslintrc.js`):
+  To ensure that imports from test files are only used in test files, use the `eslint-plugin-import` and configure it in the ESLint setup. Add the following configuration to your ESLint configuration file (e.g., `.eslintrc.js` or `.eslintrc.json`):
 
   ```csharp
-  module.exports = {
-    // other configurations...
-    plugins: ['import'],
-    rules: {
-      'import/no-extraneous-dependencies': [
-        'error',
-        {
-          devDependencies: [
-            '**/__tests__/**', // For Jest tests
-            '**/?(*.)+(spec|test).[jt]s?(x)', // For spec/test files
-          ],
-          optionalDependencies: false,
-          peerDependencies: false,
-        },
-      ],
-    },
-  };
+  {
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-require-imports": "error"
+    }
+  }
   ```
 
-  This configuration ensures that `import { testFunction } from './tests';` is only allowed in test files, helping to maintain a clear separation between production and test code.
+  This configuration extends ESLint's recommended rules and adds the `@typescript-eslint/no-require-imports` rule, which ensures that TypeScript files avoid using `require` for imports, promoting cleaner code organization and adherence to modern import practices.
 
 ### Sorting
 
@@ -228,22 +220,20 @@ This style guide provides a comprehensive overview of best practices, coding sta
 - Using path aliases is giving your code a shortcut to make import paths shorter and more understandable. This is especially handy when you have many folders nested inside each other, making your imports easier to read.
 
 ## Usage of Double Quotes (" ") & Single Quotes (' ')
-- To avoide the confusion about double quotes (" ") & single quotes (' '), use double quotes (" ") for JSX attributes and single quotes (' ') for the JS code
+- To avoid the confusion about double quotes (" ") & single quotes (' '), use double quotes (" ") for TypeScript types and single quotes (' ') for the TypeScript code
 
   The following ESLint and Prettier configurations ensure this convention is automatically enforced:
 
   ### ESLint Configuration
 
-  Add the following rules to your ESLint configuration file (e.g., `.eslintrc.js`):
+  Add the following rules to your ESLint configuration file (e.g., `.eslintrc.js` or `.eslintrc.json`):
 
   ```csharp
   module.exports = {
     // other configurations...
     rules: {
-      // Enforce single quotes for JavaScript code
-      'quotes': ['error', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
-      // Enforce double quotes for JSX attributes
-      'jsx-quotes': ['error', 'prefer-double'],
+      // Enforce single quotes for TypeScript code
+      '@typescript-eslint/quotes': ['error', 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
     },
   };
   ```
@@ -255,7 +245,7 @@ This style guide provides a comprehensive overview of best practices, coding sta
   ```csharp
   {
     "singleQuote": true,
-    "jsxSingleQuote": false
+    "quoteProps": "consistent"
   }
   ```
 
