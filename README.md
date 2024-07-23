@@ -29,6 +29,8 @@ The following standards are essential for maintaining the high quality of softwa
 - [**Version Control Standards**](/standards/version_control_standards.md): Guidelines for using version control systems effectively to track and manage changes to the codebase.
 - [**Cloud Architecture Defaults**](/standards/cloud_defaults.md): Outlines the recommended configurations and practices for cloud-based services to ensure optimal security, scalability, and efficiency in line with industry best practices.
 - [**README Standards**](/standards/readme_standards.md): Best practices for creating informative and concise README files to accompany and document software projects.
+- [**REST API Standards**](/standards/rest_api_standards.md): Outlines our standardized REST API guidelines for building efficient and reliable services to ensure seamless integration and maintainability across our ecosystem.
+
 
 ## License
 
