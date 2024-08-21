@@ -31,6 +31,21 @@ The following standards are essential for maintaining the high quality of softwa
 - [**README Standards**](/standards/readme_standards.md): Best practices for creating informative and concise README files to accompany and document software projects.
 - [**REST API Standards**](/standards/rest_api_standards.md): Outlines our standardized REST API guidelines for building efficient and reliable services to ensure seamless integration and maintainability across our ecosystem.
 
+## Symph Tech Stack
+
+The Symph tech stack encompasses a wide range of technologies and tools that power our software solutions. Below is a visual representation of the tech stack:
+
+![Symph Tech Stack](assets/symph_tech_stack.png)
+
+### Breakdown:
+- **Storage:** Cloud SQL, Supabase, MySQL, PostgreSQL, Firebase, Azure DB, Firestore.
+- **API:** NestJS, Express, TypeORM, Nx, Swagger, API Lib Builder.
+- **Frontend:** Next.js, Svelte, Flutter, React Native.
+- **DevOps:** App Engine, Cloud Run, GitHub, Cloud Build.
+- **Error and Log Monitoring:** Sentry, Google Cloud Logging.
+- **Code Quality Checks:** Sonar Check, Peer Code Review.
+
+This tech stack allows Symph to deliver high-quality, scalable, and maintainable software solutions across various domains and platforms.
 
 ## License
 
