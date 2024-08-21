@@ -31,6 +31,24 @@ The following standards are essential for maintaining the high quality of softwa
 - [**README Standards**](/standards/readme_standards.md): Best practices for creating informative and concise README files to accompany and document software projects.
 - [**REST API Standards**](/standards/rest_api_standards.md): Outlines our standardized REST API guidelines for building efficient and reliable services to ensure seamless integration and maintainability across our ecosystem.
 
+## Symph Tech Stack
+
+The Symph tech stack encompasses a wide range of technologies and tools that power our software solutions. Below is a visual representation of the tech stack:
+
+![Symph Tech Stack](assets/symph_tech_stack.png)
+
+### Breakdown:
+- **Storage:** Cloud SQL, Supabase, MySQL, PostgreSQL, Firebase, Azure DB, Firestore.
+- **API:** NestJS, Express, TypeORM, Nx, Swagger, API Lib Builder.
+- **Frontend:** Next.js, Svelte, Flutter, React Native.
+- **DevOps:** App Engine, Cloud Run, GitHub, Cloud Build.
+- **Error and Log Monitoring:** Sentry, Google Cloud Logging.
+- **Code Quality Checks:** Sonar Check, Peer Code Review.
+
+This tech stack allows Symph to deliver high-quality, scalable, and maintainable software solutions across various domains and platforms.
+We maximize proven frameworks for both the backend and frontend and uses Swagger to generate an OpenAPI spec for communication between both. This means that when something changes in the APIs present in the backend, it automatically gets generated to a working API client that the frontend can use including types and parameters and thus makes it easier to interact APIs present in the backend.
+
+Nx as a smart monorepo tool ties everything together for reusability and ease of setup for the project. Through NX smart libraries, we can share code across multiple applications of the same project domain. All shareable components, functions, types and classes are in the `libs` folder at the project's root, readily available for importing.
 
 ## License
 
