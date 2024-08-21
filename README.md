@@ -46,6 +46,9 @@ The Symph tech stack encompasses a wide range of technologies and tools that pow
 - **Code Quality Checks:** Sonar Check, Peer Code Review.
 
 This tech stack allows Symph to deliver high-quality, scalable, and maintainable software solutions across various domains and platforms.
+We maximize proven frameworks for both the backend and frontend and uses Swagger to generate an OpenAPI spec for communication between both. This means that when something changes in the APIs present in the backend, it automatically gets generated to a working API client that the frontend can use including types and parameters and thus makes it easier to interact APIs present in the backend.
+
+Nx as a smart monorepo tool ties everything together for reusability and ease of setup for the project. Through NX smart libraries, we can share code across multiple applications of the same project domain. All shareable components, functions, types and classes are in the `libs` folder at the project's root, readily available for importing.
 
 ## License
 
