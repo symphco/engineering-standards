@@ -192,23 +192,6 @@ export class LoggerMiddleware implements NestMiddleware {
 }
 ```
 
-## WebSockets
-
-NestJS provides an abstraction over WebSocket gateways.
-
-```ts
-@WebSocketGateway()
-export class ChatGateway {
-  @WebSocketServer()
-  server: Server;
-
-  @SubscribeMessage("message")
-  handleMessage(@MessageBody() message: string): string {
-    return `Received: ${message}`;
-  }
-}
-```
-
 ## Performance Optimization
 
 ### Asynchronous Programming
@@ -356,15 +339,7 @@ findAll() {
 - Use `@nestjs/swagger` to auto-generate Swagger UI
 - Provide examples in Swagger decorators
 
-## Internal Documentation
-
-```ts
-/**
- * Fetches the latest statistics for the dashboard.
- * Called every 5 minutes by the scheduler.
- */
-function refreshStats() {}
-```
+````
 
 - Comment complex logic
 - Maintain `README.md` and contribution guides
@@ -381,7 +356,7 @@ check() {
     () => this.db.pingCheck('database'),
   ]);
 }
-```
+````
 
 - Use `@nestjs/terminus` for health checks
 - Integrate with Prometheus/Grafana for monitoring
