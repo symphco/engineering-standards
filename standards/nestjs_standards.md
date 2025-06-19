@@ -8,7 +8,7 @@ This comprehensive guide outlines the recommended standards and best practices f
 
 ```text
 src/
-├── modules/              # Feature modules
+├── app/                  # Feature app
 │   ├── users/            # Example feature module
 │   │   ├── dto/          # Data Transfer Objects
 │   │   ├── entities/     # Database entities
@@ -50,7 +50,7 @@ src/
 - `camelCase` for variables and functions
 - `PascalCase` for classes and interfaces
 - `snake_case` for database columns (if applicable)
-- `UPPER_CASE` for environment variables
+- `UPPER_CASE` for environment variables and global constants
 
 ### Service & Controller Patterns
 
