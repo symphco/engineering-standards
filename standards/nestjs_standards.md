@@ -167,6 +167,113 @@ findOne(@Param('id', ParseIntPipe) id: number) {
 }
 ```
 
+### Dependency Injection
+
+Use Dependency Injection to keep your code modular, testable, and maintainable. NestJS supports DI natively using TypeScript decorators.
+
+Here are recommended ways and several approaches to Dependency Injection
+
+- Constructor-based Injection (Most Common)
+
+Inject services using class constructors for strong typing and clarity.
+
+```ts
+@Injectable()
+export class UserService {
+  constructor(private readonly userRepository: UserRepository) {}
+}
+```
+
+- Module-based Providers
+
+On this example below, you must declare services in the providers array of your module. Export services when you need to use them in other modules.
+
+```ts
+@Module({
+  providers: [UserService],
+  exports: [UserService],
+})
+export class UserModule {}
+```
+
+- Custom Provider Tokens
+
+Use custom provider tokens if you need to inject values, factories, or different implementations.
+
+```ts
+{
+  provide: 'CUSTOM_TOKEN',
+  useClass: CustomService,
+}
+```
+
+Also supports: `useValue`
+, `useFactory`, `useExisting`
+
+- useFactory for Dynamic Injection
+
+Use useFactory when you need dynamic or async logic to create a provider.
+
+```ts
+{
+  provide: 'ASYNC_TOKEN',
+  useFactory: async () => await someInitFunction(),
+}
+```
+
+- Global Modules
+  Create global modules for shared utilities like logging or configuration.
+
+```ts
+@Global()
+@Module({
+  providers: [LoggerService],
+  exports: [LoggerService],
+})
+export class SharedModule {}
+```
+
+### Circular Dependencies
+
+Circular dependencies happens when two modules depend on each other. This causes undefined values at runtime.
+Example `AppointmentsModule` imports `PatientModule`. `PatientModule` also imports `AppointmentsModule`.
+
+To resolve it, Use `forwardRef` to tell NestJS to resolve the dependency later.
+
+1. In `AppointmentsModule`
+
+```ts
+@Module({
+  imports: [forwardRef(() => PatientModule)],
+  providers: [AppointmentsService],
+  exports: [AppointmentsService],
+})
+export class AppointmentsModule {}
+```
+
+2. In `PatientModule`
+
+```ts
+@Module({
+  imports: [forwardRef(() => AppointmentsModule)],
+  providers: [PatientService],
+  exports: [PatientService],
+})
+export class PatientModule {}
+```
+
+3. Injecting Circular Services
+
+```ts
+@Injectable()
+export class PatientService {
+  constructor(
+    @Inject(forwardRef(() => AppointmentsService))
+    private readonly appointmentsService: AppointmentsService
+  ) {}
+}
+```
+
 ### Middleware
 
 Middleware functions are executed before route handlers.
