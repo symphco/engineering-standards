@@ -173,7 +173,7 @@ Use Dependency Injection to keep your code modular, testable, and maintainable. 
 
 Here are recommended ways and several approaches to Dependency Injection
 
-- Constructor-based Injection (Most Common)
+- #### Constructor-based Injection (Most Common)
 
 Inject services using class constructors for strong typing and clarity.
 
@@ -184,7 +184,7 @@ export class UserService {
 }
 ```
 
-- Module-based Providers
+- #### Module-based Providers
 
 On this example below, you must declare services in the providers array of your module. Export services when you need to use them in other modules.
 
@@ -196,21 +196,63 @@ On this example below, you must declare services in the providers array of your 
 export class UserModule {}
 ```
 
-- Custom Provider Tokens
+- #### Custom Provider Tokens
 
-Use custom provider tokens if you need to inject values, factories, or different implementations.
+Use custom provider tokens to inject abstract interfaces or alternate implementations instead of directly injecting concrete services. This improves flexibility, testability, and adheres to the Dependency Inversion Principle.
+
+Heres an example of injecting a service via token to allow swapping implementations (e.g., real vs mock service).
 
 ```ts
-{
-  provide: 'CUSTOM_TOKEN',
-  useClass: CustomService,
+// appointment.interface.ts
+export interface IAppointmentService {
+  findAll(): Promise<any[]>;
+  create(data: any): Promise<any>;
 }
 ```
+
+```ts
+// constants.ts
+export const ServiceName = {
+  APPOINTMENT: "APPOINTMENT_SERVICE",
+};
+```
+
+```ts
+// appointment.module.ts
+@Module({
+  providers: [
+    {
+      provide: ServiceName.APPOINTMENT,
+      useClass: AppointmentService,
+    },
+  ],
+  exports: [ServiceName.APPOINTMENT],
+})
+export class AppointmentModule {}
+```
+
+```ts
+// appointment.controller.ts
+@Controller("appointments")
+export class AppointmentController {
+  constructor(
+    @Inject(ServiceName.APPOINTMENT)
+    private readonly appointmentService: IAppointmentService
+  ) {}
+
+  @Get()
+  findAll() {
+    return this.appointmentService.findAll();
+  }
+}
+```
+
+In this example, the controller depends on an interface (IAppointmentService) instead of the concrete AppointmentService class. The @Inject() decorator uses a custom token (APPOINTMENT_SERVICE) to resolve the dependency. This enables easy swapping of implementations (e.g., using a mock service for testing) without modifying controller logic. It’s a common pattern in NestJS for achieving inversion of control and following clean architecture principles.
 
 Also supports: `useValue`
 , `useFactory`, `useExisting`
 
-- useFactory for Dynamic Injection
+- #### useFactory for Dynamic Injection
 
 Use useFactory when you need dynamic or async logic to create a provider.
 
@@ -221,7 +263,7 @@ Use useFactory when you need dynamic or async logic to create a provider.
 }
 ```
 
-- Global Modules
+- #### Global Modules
   Create global modules for shared utilities like logging or configuration.
 
 ```ts
@@ -238,15 +280,24 @@ export class SharedModule {}
 Circular dependencies happens when two modules depend on each other. This causes undefined values at runtime.
 Example `AppointmentsModule` imports `PatientModule`. `PatientModule` also imports `AppointmentsModule`.
 
-To resolve it, Use `forwardRef` to tell NestJS to resolve the dependency later.
+While `forwardRef()` technically resolves circular references, it usually indicates poor modular design. So better to refactor your code and extract shared logic into a separate SharedModule that both modules can import.
+
+```ts
+// shared/shared.module.ts
+@Global()
+@Module({
+  providers: [CommonService],
+  exports: [CommonService],
+})
+export class SharedModule {}
+```
 
 1. In `AppointmentsModule`
 
 ```ts
+// appointments.module.ts
 @Module({
-  imports: [forwardRef(() => PatientModule)],
-  providers: [AppointmentsService],
-  exports: [AppointmentsService],
+  imports: [SharedModule],
 })
 export class AppointmentsModule {}
 ```
@@ -254,25 +305,14 @@ export class AppointmentsModule {}
 2. In `PatientModule`
 
 ```ts
+// patient.module.ts
 @Module({
-  imports: [forwardRef(() => AppointmentsModule)],
-  providers: [PatientService],
-  exports: [PatientService],
+  imports: [SharedModule],
 })
 export class PatientModule {}
 ```
 
-3. Injecting Circular Services
-
-```ts
-@Injectable()
-export class PatientService {
-  constructor(
-    @Inject(forwardRef(() => AppointmentsService))
-    private readonly appointmentsService: AppointmentsService
-  ) {}
-}
-```
+In this setup, both AppointmentsModule and PatientModule import SharedModule instead of directly depending on each other. Any shared services (like CommonService) are defined once in SharedModule and reused across modules. This eliminates the circular dependency, promotes better modular design, and avoids the need for forwardRef().
 
 ### Middleware
 
