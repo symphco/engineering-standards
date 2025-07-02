@@ -31,15 +31,36 @@ src/
 ### Module Organization Principles
 
 - Each feature in its own module; cross-cutting concerns (auth, email, metrics) go in common or shared modules.
-- Small apps: flat structure; larger apps: domain or hexagonal architecture per module.
-- Use barrel files for clean imports—avoid hidden dependencies.
-- Use forwardRef() judiciously to resolve circular references.
+- Small apps: flat structure; larger apps: feature-based modules with standard NestJS layered architecture (Controller → Service → Repository with DTOs, entities, and interfaces).
+- Use barrel files for clean imports and avoid hidden dependencies.
+- Use forwardRef() carefully and only when needed to resolve circular references.
+
+`Barrel` files are index.ts files that re-export multiple modules from a directory, allowing you to import everything from a single location. They simplify imports and create cleaner, more maintainable code.
+
+Here’s an example of using barrel files in NestJS:
+
+```ts
+// users/index.ts (barrel file)
+export { UsersController } from "./users.controller";
+export { UsersService } from "./users.service";
+export { CreateUserDto } from "./dto/create-user.dto";
+export { User } from "./entities/user.entity";
+
+// Instead of multiple imports:
+import { UsersController } from "./users/users.controller";
+import { UsersService } from "./users/users.service";
+import { CreateUserDto } from "./users/dto/create-user.dto";
+
+// You can import from the barrel:
+import { UsersController, UsersService, CreateUserDto } from "./users";
+```
 
 ## Coding Standards
 
 ### General Guidelines
 
 - Follow **TypeScript** conventions and leverage strong typing
+- Avoid using `any` type and use specific types, interfaces, or generics instead
 - Prefer `async/await` over Promises directly
 - Use **ESLint** and **Prettier** for consistent style enforcement
 - Avoid magic strings/numbers — use enums or constants
@@ -51,6 +72,7 @@ src/
 - `PascalCase` for classes and interfaces
 - `snake_case` for database columns (if applicable)
 - `UPPER_CASE` for environment variables and global constants
+- `Plural` names for modules (e.g., `UsersModule`, `AppointmentsModule`) to maintain consistency with controllers and services
 
 ### Service & Controller Patterns
 
@@ -78,6 +100,7 @@ export class UsersController {
 
 - Use DTOs for all incoming requests
 - Apply validation decorators from `class-validator`
+- Use the `@ApiProperty()` decorator so each field appears in the generated Swagger API docs, making it easy for others to see what data is needed or returned.
 
 ```ts
 import {
@@ -87,17 +110,22 @@ import {
   Max,
   IsOptional,
   IsEmail,
+  IsNotEmpty,
 } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateUserDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty()
   @IsInt()
   @Min(18)
   @Max(100)
@@ -193,7 +221,7 @@ On this example below, you must declare services in the providers array of your 
   providers: [UserService],
   exports: [UserService],
 })
-export class UserModule {}
+export class UsersModule {}
 ```
 
 - #### Custom Provider Tokens
@@ -205,8 +233,8 @@ Heres an example of injecting a service via token to allow swapping implementati
 ```ts
 // appointment.interface.ts
 export interface IAppointmentService {
-  findAll(): Promise<any[]>;
-  create(data: any): Promise<any>;
+  findAll(): Promise<Appointment[]>;
+  create(data: CreateAppointmentDto): Promise<Appointment>;
 }
 ```
 
@@ -218,7 +246,7 @@ export const ServiceName = {
 ```
 
 ```ts
-// appointment.module.ts
+// appointments.module.ts
 @Module({
   providers: [
     {
@@ -228,7 +256,7 @@ export const ServiceName = {
   ],
   exports: [ServiceName.APPOINTMENT],
 })
-export class AppointmentModule {}
+export class AppointmentsModule {}
 ```
 
 ```ts
@@ -278,7 +306,7 @@ export class SharedModule {}
 ### Circular Dependencies
 
 Circular dependencies happens when two modules depend on each other. This causes undefined values at runtime.
-Example `AppointmentsModule` imports `PatientModule`. `PatientModule` also imports `AppointmentsModule`.
+Example `AppointmentsModule` imports `PatientsModule`. `PatientsModule` also imports `AppointmentsModule`.
 
 While `forwardRef()` technically resolves circular references, it usually indicates poor modular design. So better to refactor your code and extract shared logic into a separate SharedModule that both modules can import.
 
@@ -302,17 +330,17 @@ export class SharedModule {}
 export class AppointmentsModule {}
 ```
 
-2. In `PatientModule`
+2. In `PatientsModule`
 
 ```ts
-// patient.module.ts
+// patients.module.ts
 @Module({
   imports: [SharedModule],
 })
-export class PatientModule {}
+export class PatientsModule {}
 ```
 
-In this setup, both AppointmentsModule and PatientModule import SharedModule instead of directly depending on each other. Any shared services (like CommonService) are defined once in SharedModule and reused across modules. This eliminates the circular dependency, promotes better modular design, and avoids the need for forwardRef().
+In this setup, both AppointmentsModule and PatientsModule import SharedModule instead of directly depending on each other. Any shared services (like CommonService) are defined once in SharedModule and reused across modules. This eliminates the circular dependency, promotes better modular design, and avoids the need for forwardRef().
 
 ### Middleware
 
@@ -337,6 +365,50 @@ export class LoggerMiddleware implements NestMiddleware {
 - **Enable API versioning by default** - Use `app.enableVersioning({ type: VersioningType.URI })` in `main.ts`
 - Version all controllers with `@Controller({ path: 'users', version: '1' })`
 - Maintain backward compatibility when introducing new versions
+
+```ts
+// Approach 1: Simple version numbers (Recommended)
+// Results in: /v1/users, /v2/users
+app.enableVersioning({
+  type: VersioningType.URI,
+  prefix: "v",
+});
+
+@Controller({ path: "users", version: "1" })
+export class UsersV1Controller {
+  @Get()
+  getUsers() {
+    return this.usersService.findAll();
+  }
+}
+
+// Approach 2: Semantic versioning
+// Results in: /v1.0/users, /v1.1/users
+app.enableVersioning({
+  type: VersioningType.URI,
+  prefix: "v",
+});
+
+@Controller({ path: "users", version: "1.0" })
+export class UsersV1Controller {}
+
+@Controller({ path: "users", version: "1.1" })
+export class UsersV1_1Controller {}
+
+// Approach 3: API prefix with versioning
+// Results in: /api/v1/users, /api/v2/users
+app.setGlobalPrefix("api");
+app.enableVersioning({
+  type: VersioningType.URI,
+  prefix: "v",
+});
+```
+
+**Example Endpoint URLs:**
+
+- Simple: `GET /v1/users`, `POST /v2/users`
+- Semantic: `GET /v1.0/users`, `GET /v1.1/users`
+- With API prefix: `GET /api/v1/users`, `POST /api/v1/users`
 
 ## Performance Optimization
 
@@ -522,11 +594,104 @@ getAllUsers() {
 
 ## Documentation
 
+At Symph, we document all projects to help teams work together better. Good documentation saves time when new developers join, makes fixing bugs easier, and keeps important decisions recorded for the future.
+
 ### API Documentation
 
-- Use `@nestjs/swagger` to auto-generate Swagger UI
-- Group routes using tags
-- Provide examples in Swagger decorators
+#### Setting Up Swagger/OpenAPI Documentation
+
+- Use @nestjs/swagger to automatically generate interactive API documentation and OpenAPI specifications.
+- Apply Swagger decorators to controllers and DTOs to provide detailed API information.
+- Configure Swagger UI to be accessible at a dedicated endpoint for easy API exploration.
+
+```ts
+// main.ts
+import { NestFactory } from "@nestjs/core";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import { writeFileSync } from "fs";
+const isProduction = process.env.NODE_ENV === "production";
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  if (!isProduction) {
+    const openAPIOptions = new DocumentBuilder()
+      .setTitle("API Documentation")
+      .setDescription("Complete API reference")
+      .setVersion("1.0")
+      .addBearerAuth()
+      .build();
+
+    const openAPIDocument = SwaggerModule.createDocument(app, openAPIOptions);
+    SwaggerModule.setup("api-docs", app, openAPIDocument);
+
+    writeFileSync(
+      "./openapi-spec.json",
+      JSON.stringify(openAPIDocument, null, 2)
+    );
+  }
+
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+In this example, Swagger is enabled in the main entry point of the project (typically main.ts) for generating the OpenAPI specification file. It's important to note that Swagger UI and spec generation should only be enabled in non-production environments, as shown above using the `!isProduction` condition.
+
+#### Controller and DTO Documentation Examples
+
+- Document your API endpoints with clear descriptions, examples, and response types.
+- Use Swagger decorators to provide comprehensive information about request/response structures.
+- Group related endpoints using tags for better organization.
+
+```ts
+@ApiTags("users")
+@Controller({ path: "users", version: "1" })
+export class UsersController {
+  @Get()
+  @ApiOperation({ summary: "Get all users" })
+  @ApiResponse({ status: 200, description: "Users retrieved successfully" })
+  async getAllUsers(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
+
+  @Post()
+  @ApiOperation({ summary: "Create a new user" })
+  @ApiBody({ type: CreateUserDto })
+  @ApiResponse({ status: 201, description: "User created successfully" })
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto);
+  }
+}
+```
+
+In this example, UsersController handles API requests related to users. It is versioned with 'v1' and tagged as 'users' in the Swagger documentation, making it easier to organize and view in the API docs.
+
+```ts
+import { ApiProperty } from "@nestjs/swagger";
+
+export class CreateUserDto {
+  @ApiProperty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty()
+  @IsString()
+  name: string;
+}
+```
+
+The `@ApiProperty()` decorators are used to include both fields in the Swagger documentation, so they appear clearly when viewing the API docs.
+
+**When to Generate OpenAPI Spec**
+
+- `After Backend Changes` - Generate new clients when controllers, DTOs, or endpoints are modified
+- `During Development` - Generate locally when adding new features to test integration immediately
+- `In CI/CD Pipeline` - Automatically generate and update client libraries when API changes are deployed
+- `Before Frontend Development` - Ensure frontend teams have the latest API interfaces before implementing new features
+- `Cross-Team Integration` - Generate clients for different teams working on mobile, web, or external integrations
+
+This approach ensures consistent API documentation and type-safe client generation across all our projects, regardless of domain or complexity.
 
 ### Internal Documentation
 
@@ -563,9 +728,5 @@ export default () => ({
 - Ensure PRs pass lint, tests, and coverage thresholds
 - Encourage peer reviews
 - Use automated tools for validation
-
-## Documentation
-
-- Maintain a README file with project setup instructions and other essential information.
 
 By adhering to these guidelines, developers can ensure that their Nest.js projects are well-organized, maintainable, and scalable. Adapt these recommendations based on specific project needs and preferences.
